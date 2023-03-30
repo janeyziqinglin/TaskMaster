@@ -21,6 +21,7 @@ const getTasks = async(req,res)=>{
     }
 };
 
+//get a task with id
 const getTask = async(req,res)=>{
     try {
         const {id} = (req.params);
@@ -36,7 +37,7 @@ const getTask = async(req,res)=>{
 
 }
 
-
+//delete
 const deleteTask = async(req,res)=>{
     try {
         const { id } = (req.params);
@@ -52,9 +53,27 @@ const deleteTask = async(req,res)=>{
     }
 };
 
+//update
+//runValidator to make sure that rule set in taskMaster is enforced
+const updateTask = async(req,res)=>{
+    try {
+        const { id } = (req.params);
+        const task = await Task.findByIdAndUpdate({_id: id} , req.body, {new: true , runValidators: true});
+        //id not found 
+        if (!task){
+            return res.status(404).json('No task with id: ${id}');
+        }
+
+        res.status(200).json(task);
+    } catch (error) {
+        res.status(200).json({msg: error.message});
+    }
+};
+
 module.exports = {
     createTask,
     getTasks,
     getTask,
     deleteTask,
+    updateTask,
 }
