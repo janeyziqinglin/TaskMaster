@@ -1,10 +1,11 @@
 import {BiCheckDouble,BiEdit,BiTrash} from 'react-icons/bi'
 
-const Task = () => {
+const Task = ({task, index}) => {
   return (
-    <div className='task'>
+    <div className="task">
         <p>
-            <b> 1.</b>
+            <b> {index + 1}. </b>
+            {task.name}
         </p>
         <div className = "task-icons">
             <BiCheckDouble color='green' />
