@@ -8,7 +8,7 @@ const Task = () => {
         </p>
         <div className = "task-icons">
             <BiCheckDouble color='green' />
-            <BiEdit />
+            <BiEdit color='purple'/>
             <BiTrash  color='red'/>
         </div>
     </div>
