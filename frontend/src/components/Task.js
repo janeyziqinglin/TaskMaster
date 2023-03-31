@@ -1,6 +1,6 @@
 import {BiCheckDouble,BiEdit,BiTrash} from 'react-icons/bi'
 
-const Task = ({task, index}) => {
+const Task = ({task, index, deleteTask}) => {
   return (
     <div className="task">
         <p>
@@ -10,10 +10,11 @@ const Task = ({task, index}) => {
         <div className = "task-icons">
             <BiCheckDouble color='green' />
             <BiEdit color='purple'/>
-            <BiTrash  color='red'/>
+            <BiTrash  color='red' onClick={() => deleteTask(task._id)}/>
         </div>
     </div>
   )
 }
 
 export default Task
+
