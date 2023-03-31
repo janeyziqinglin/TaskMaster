@@ -1,9 +1,16 @@
-import React from 'react'
+import {BiCheckDouble,BiEdit,BiTrash} from 'react-icons/bi'
 
 const Task = () => {
   return (
-    <div>
-      <h2>Task</h2>
+    <div className='task'>
+        <p>
+            <b> 1.</b>
+        </p>
+        <div className = "task-icons">
+            <BiCheckDouble color='green' />
+            <BiEdit />
+            <BiTrash  color='red'/>
+        </div>
     </div>
   )
 }
