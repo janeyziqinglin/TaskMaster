@@ -3,13 +3,17 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Task = require("./models/taskModels");
 const taskRoutes = require("./routes/taskRoute");
+const cors = require("cors");
 
 const app = express();
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors()); //cors need to be on before routes
+
 app.use("/api/tasks",taskRoutes);
+
 
 // Routes
 app.get("/", (req, res) => {
