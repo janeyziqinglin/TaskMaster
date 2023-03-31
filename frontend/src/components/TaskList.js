@@ -1,25 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Task from './Task'
 import TaskForm from './TaskForm'
 import { toast } from 'react-toastify';
 import axios from "axios";
 import { URL } from '../App';
-
+import loadingImg from "../assets/loader.gif";
 
 const TaskList = () => {
+    const [tasks, setTasks] = useState([]);
+    const [completedTasks, setCompletedTasks] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
     const [formData, setFormData] = useState({
         name: "",
-        completed : false
-    })
+        completed: false,
+    });
+
     //get name, so we can use it later 
-    const {name} = formData
+    const {name} = formData;
 
     const handleInputChange = (e) => {
         const {name, value} = e.target
         setFormData({ ...formData, [name]: value}) //existing property,name, value
     };
 
-    
+    const getTasks= async() => {
+        setIsLoading(true)
+        try {
+            const {data} = await axios.get(`${URL}/api/tasks`)
+            setTasks(data)
+            setIsLoading(false)
+        } catch (error) {
+            toast.error(error.message);
+            setIsLoading(false)
+        }
+    }
+
+    useEffect( () => {
+        getTasks()
+    }, [])
+
     const createTask= async(e) => {
         e.preventDefault()
         // console.log(formData)
@@ -49,9 +69,25 @@ const TaskList = () => {
         </p>
       </div>
       <hr />
-      <Task />
+      {isLoading && (
+        <div className = "--flex-center">
+            <img src ={loadingImg} alt = "Loading" />
+        </div>
+        )}
+      {
+        !isLoading && tasks.length === 0 ? (
+            <p className = "--py"> No task added. 
+            Please add a task</p>
+        ) : (
+          <>
+            {tasks.map((task, index) => {
+                return <Task key={task._id} task=
+                {task} index={index}/>;
+            })}
+          </>
+        )}
     </div>
-  )
+  );
 }
 
 export default TaskList
