@@ -106,6 +106,13 @@ const TaskList = () => {
         }
     }
 
+    useEffect( () => {
+        const cTask = tasks.filter((task) => {
+            return task.completed ===true
+        })
+        setCompletedTasks(cTask)
+    }, [tasks])
+
   return (
     <div>
       <h2>Task Master</h2>
@@ -116,14 +123,16 @@ const TaskList = () => {
       isEditing = {isEditing}
       updateTask = {updateTask}
       />
+      {tasks.length > 0 && (
       <div className = "--flex-between --pb">
         <p>
-            <b> Total Tasks:</b> 0
+            <b> Total Tasks:</b> {tasks.length}
         </p>
         <p>
-            <b> Completed Tasks:</b> 0
+            <b> Completed Tasks:</b> {completedTasks.length}
         </p>
       </div>
+      )}
       <hr />
       {isLoading && (
         <div className = "--flex-center">
